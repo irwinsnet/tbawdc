@@ -4,20 +4,17 @@
     <title>The Blue Alliance Read API V3</title>
     <meta http-equiv="Cache-Control" content="no-store" />
 
-    <!-- <link rel="stylesheet"
-          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
-          crossorigin="anonymous"> -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
             integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
             crossorigin="anonymous"></script>
-    <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
-            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-            crossorigin="anonymous"></script> -->
-
     <script src="https://connectors.tableau.com/libs/tableauwdc-2.3.latest.js"
             type="text/javascript"></script>
+
+    <script src="tbautil.js" type="text/javascript"></script>
+    <script src="tbadistricts.js" type="text/javascript"></script>
+    <script src="tbateams.js" type="text/javascript"></script>
     <script src="tbawdc.js" type="text/javascript"></script>
+
 </head>
 
 <body>
@@ -28,8 +25,10 @@
     <div id="interactive">
         <label for="district_year">Year:</label>
         <input type="number" id="district_year">
+    </div>
+    <div id="submit">
         <button type="button" id="submitButton" style="margin: 10px;">
-            Get Districts
+            Submit
         </button>
     </div>
 
