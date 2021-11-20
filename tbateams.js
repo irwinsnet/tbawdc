@@ -1,5 +1,5 @@
-tbaTeam= {}
-tbaTeam.cols = [
+tbaSchema= {}
+tbaSchema.cols = [
     {
         id: "key",
         dataType: tableau.dataTypeEnum.string
@@ -39,8 +39,51 @@ tbaTeam.cols = [
         dataType: tableau.dataTypeEnum.string
     }];
 
-tbaTeam.schema = {
+tbaSchema.schema = {
     id: "teams",
     alias: "FRC Teams",
-    columns: tbaTeam.cols
+    columns: tbaSchema.cols
+};
+
+tbaSchema.getData = function(table, doneCallback) {
+    var teams = []; 
+    function successCallback(resp, status, xhr) {
+        len = resp.length;
+        for (let i = 0; i < len; i++) {
+            let team = {};
+            for (const col of tbaSchema.cols) {
+                team[col.id] = resp[i][col.id];
+            }
+            teams.push(team);
+        }
+    }
+
+    function errorCallback(xhr, status, err) {
+        tableau.log(status + ": " + err);
+    }
+
+    let tbaBaseUrl = JSON.parse(tableau.connectionData).tbaBaseUrl;
+    let pageNum = 0;
+    numTeams = teams.length;
+    while (true) {
+        pageNum++;
+        let tbaUrl = `${tbaBaseUrl}teams/${pageNum}`;
+        tableau.log(`URL: ${ tbaUrl }`);
+        $.ajax({
+            url: tbaUrl,
+            dataType: "json", 
+            async: false,
+            headers: {
+                "X-TBA-Auth-Key": tableau.password
+            },
+            cache: false,
+            success: successCallback,
+            error: errorCallback
+        });
+        if (teams.length == numTeams) break;
+        numTeams = teams.length;
+    }
+
+    table.appendRows(teams);
+    doneCallback();
 };
